@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project Documentation</h1>
+
+    <h2>Software Overview</h2>
+    <p>This project is a PyQt application that fetches and displays random facts from a Flask API.</p>
+
+    <h2>PyQt Application</h2>
+    <h3>Setup</h3>
+    <p>To set up the PyQt application, ensure you have Python and PyQt5 installed. You can install PyQt5 using pip:</p>
+    <pre><code>pip install PyQt5 requests</code></pre>
+
+    <h3>Usage</h3>
+    <p>Run the PyQt application using the following command:</p>
+    <pre><code>python pyqt_app.py</code></pre>
+    <p>The application will display a window with a label that updates with random facts every 5 seconds.</p>
+
+    <h2>Flask API</h2>
+    <h3>Setup</h3>
+    <p>To set up the Flask API, ensure you have Python and Flask installed. You can install Flask using pip:</p>
+    <pre><code>pip install Flask gunicorn</code></pre>
+
+    <h3>Running Locally</h3>
+    <p>Run the Flask application using the following command:</p>
+    <pre><code>python backend.py</code></pre>
+    <p>The Flask API will be available at <code>http://127.0.0.1:5000</code>.</p>
+
+    <h3>Deploying to Render</h3>
+    <p>To deploy the Flask API to Render, follow these steps:</p>
+    <ol>
+        <li>Push your code to a GitHub repository.</li>
+        <li>Create a new Web Service on Render and connect your GitHub repository.</li>
+        <li>Render will automatically detect your Flask app and deploy it.</li>
+    </ol>
+    <p>The API will be available at <code>https://your-app-name.onrender.com</code>.</p>
+
+    <h3>API Endpoint</h3>
+    <p>The API provides the following endpoint:</p>
+    <ul>
+        <li><code>GET /random_fact</code> - Returns a random fact in JSON format.</li>
+    </ul>
+    <p>Example response:</p>
+    <pre><code>{
+    "fact": "Fact 1"
+}</code></pre>
+
+    <h2>Example PyQt Application Code</h2>
+    <pre><code>import sys
+import requests
+from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtCore import QTimer
+
+class FactFetcher(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_fact)
+        self.timer.start(5000)  # Update every 5 seconds
+
+    def initUI(self):
+        self.layout = QVBoxLayout()
+        self.fact_label = QLabel('Fetching fact...', self)
+        self.layout.addWidget(self.fact_label)
+        self.setLayout(self.layout)
+        self.setWindowTitle('Random Fact')
+        self.resize(300, 200)
+        self.update_fact()
+
+    def update_fact(self):
+        try:
+            response = requests.get('https://your-app-name.onrender.com/random_fact')
+            if response.status_code == 200:
+                fact = response.json().get('fact')
+                self.fact_label.setText(fact)
+            else:
+                self.fact_label.setText('Failed to fetch fact')
+        except Exception as e:
+            self.fact_label.setText(f'Error: {e}')
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    fetcher = FactFetcher()
+    fetcher.show()
+    sys.exit(app.exec_())</code></pre>
+
+    <h2>Example Flask API Code</h2>
+    <pre><code>from flask import Flask, jsonify
+import random
+
+app = Flask(__name__)
+
+facts = [
+    "Fact 1",
+    "Fact 2",
+    "Fact 3",
+    "Fact 4",
+    "Fact 5"
+]
+
+@app.route('/random_fact', methods=['GET'])
+def random_fact():
+    return jsonify({"fact": random.choice(facts)})
+
+if __name__ == '__main__':
+    app.run()</code></pre>
+</body>
+</html>

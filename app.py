@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+import os
+from flask import Flask, jsonify, send_from_directory
 import random
 
 app = Flask(__name__)
@@ -31,5 +32,9 @@ facts = [
 def random_fact():
     return jsonify({"fact": random.choice(facts)})
 
+@app.route('/docs')
+def docs():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'index.html')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
