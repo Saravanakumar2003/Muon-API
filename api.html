@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Documentation</title>
+    <title>Muon Track Reconstruction</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,10 +21,10 @@
     </style>
 </head>
 <body>
-    <h1>Project Documentation</h1>
+    <h1>API Documentation</h1>
 
     <h2>Software Overview</h2>
-    <p>This project is a PyQt application that fetches and displays random facts from a Flask API.</p>
+    <p>This project is made for a PyQt application that fetches and displays random facts from a Flask API.</p>
 
     <h2>PyQt Application</h2>
     <h3>Setup</h3>
@@ -80,13 +80,12 @@ class FactFetcher(QWidget):
         self.timer.start(5000)  # Update every 5 seconds
 
     def initUI(self):
-        self.layout = QVBoxLayout()
-        self.fact_label = QLabel('Fetching fact...', self)
-        self.layout.addWidget(self.fact_label)
-        self.setLayout(self.layout)
-        self.setWindowTitle('Random Fact')
-        self.resize(300, 200)
-        self.update_fact()
+        .....
+        self.documentation = self.findChild(QAction, "actionDocumentation")
+        self.actionKeyboardShortcuts = self.findChild(QAction, "actionKeyboardShortcuts")
+        ....
+        
+    self.documentation.triggered.connect(self.open_documentation)
 
     def update_fact(self):
         try:
