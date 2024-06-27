@@ -55,7 +55,11 @@ def random_fact():
 
 @app.route('/docs')
 def docs():
-    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'api.html')
+    return send_from_directory(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html'), 'api.html')
+
+@app.route('/index')
+def index():
+    return send_from_directory(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html'), 'index.html')
 
 if __name__ == '__main__':
     app.run()
