@@ -1,11 +1,11 @@
 import os
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, render_template
 import random
 
 app = Flask(__name__)
 
 facts = [
-     "The muon is an elementary particle similar to the electron.",
+    "The muon is an elementary particle similar to the electron.",
     "Muons have a negative electric charge and a spin of 1/2.",
     "Muons are classified as leptons in the Standard Model of particle physics.",
     "The muon is about 207 times more massive than the electron.",
@@ -55,11 +55,15 @@ def random_fact():
 
 @app.route('/docs')
 def docs():
-    return send_from_directory(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html'), 'api.html')
+    return render_template('api.html')
 
-@app.route('/index')
+@app.route('/home')
 def index():
-    return send_from_directory(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html'), 'index.html')
+    return render_template('home.html')
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()
