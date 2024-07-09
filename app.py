@@ -53,17 +53,5 @@ facts = [
 def random_fact():
     return jsonify({"fact": random.choice(facts)})
 
-@app.route('/docs')
-def docs():
-    return render_template('api.html')
-
-@app.route('/home')
-def index():
-    return render_template('home.html')
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
 if __name__ == '__main__':
     app.run()
