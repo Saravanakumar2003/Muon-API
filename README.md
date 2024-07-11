@@ -86,14 +86,6 @@ class FactFetcher(QWidget):
         self.timer.timeout.connect(self.update_fact)
         self.timer.start(5000)  # Update every 5 seconds
 
-    def initUI(self):
-        .....
-        self.documentation = self.findChild(QAction, "actionDocumentation")
-        self.actionKeyboardShortcuts = self.findChild(QAction, "actionKeyboardShortcuts")
-        ....
-        
-    self.documentation.triggered.connect(self.open_documentation)
-
     def update_fact(self):
         try:
             response = requests.get('https://your-app-name.onrender.com/random_fact')
